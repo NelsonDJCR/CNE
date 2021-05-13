@@ -1,0 +1,22 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Illuminate\Support\Facades\DB;
+
+class PasswordReset extends Model
+{
+	use LogsActivity;
+
+	protected static $logAttributes = ['*'];
+
+    protected static $logName       = 'password reset';
+
+    protected $table = 'password_resets';
+
+    protected $fillable = [
+        'email', 'token'
+    ];
+}
