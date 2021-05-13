@@ -10,13 +10,19 @@
         />
         <template v-if="action == 0">
           <div class="container mt-5">
-            <label for="" class="p-2">Cabildos/Listado de casos </label>
+            <label for="" class="p-2">Cabildos/Listado de magistrados </label>
             <div class="row p-2 text-center border shadow">
               <div class="row">
                 <div class="col-12 col-md-12 col-lg-10 col-xl-10 p-2">
-                  <h1 class="text-blue"><b>LISTADO DE CASOS</b></h1>
+                  <h1 class="text-blue"><b>LISTADO DE MAGISTRADO</b></h1>
                 </div>
-                
+                <div class="col-12 col-md-12 col-lg-2 col-xl-2 p-2">
+                  <button
+                  @click="pantallaNuevo"
+                    class="btn btn-warning text-white w-100 mt-2"
+                    >Nuevo magistrado</button
+                  >
+                </div>
               </div>
             </div>
             <form @submit.prevent="filter">
