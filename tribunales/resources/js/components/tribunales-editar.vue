@@ -114,6 +114,9 @@
                 class="form-select"
                 name="type_file"
                 v-model="sesion.type_file"
+
+
+                
               >
                 <option
                   v-for="(i, index) in type_file"
