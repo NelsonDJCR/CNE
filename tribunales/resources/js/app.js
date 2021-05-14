@@ -8,6 +8,7 @@ window.Vue = require('vue');
 Vue.component('listarSesiones', require('./components/listarSesiones.vue').default);
 Vue.component('editar-sesion', require('./components/editar-sesion.vue').default);
 Vue.component('tribunales-nuevo', require('./components/tribunales-nuevo.vue').default);
+Vue.component('tribunales-editar', require('./components/tribunales-editar.vue').default);
 // Vue.component('tipo-documento', require('./components/tipoDocumento_J/index.vue').default);
 
 Vue.directive('permiso', function (el, binding,vnode) {

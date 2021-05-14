@@ -18,10 +18,11 @@
                 </div>
                 <div class="col-12 col-md-12 col-lg-2 col-xl-2 p-2">
                   <button
-                  @click="pantallaNuevo"
+                    @click="pantallaNuevo"
                     class="btn btn-warning text-white w-100 mt-2"
-                    >Nuevo magistrado</button
                   >
+                    Nuevo magistrado
+                  </button>
                 </div>
               </div>
             </div>
@@ -100,8 +101,8 @@
           </div>
           <table class="table table-bordered table-striped table-sm" id="datos">
             <thead>
-              <th style="width: 195px">Opciones</th>
-              <th>Tema</th>
+              <th style="width: 130px">Opciones</th>
+              <th>Nombre</th>
               <th>Departamento</th>
               <th>Municipio</th>
               <th>Dirección</th>
@@ -110,22 +111,13 @@
               <th>Estado</th>
             </thead>
             <tbody>
-              <tr v-for="(i, index) in cabildos" :key="index">
+              <!-- v-for="(i, index) in cabildos" :key="index" -->
+              <tr>
                 <td class="aling_btn_options">
                   <button
                     type="button"
-                    @click="modal_export(i.id)"
+                    @click="data_edit()"
                     class="btn btn-info btn-sm"
-                  >
-                    <i
-                      class="typcn typcn-document-text"
-                      style="color: white"
-                    ></i>
-                  </button>
-                  <button
-                    type="button"
-                    @click="editSession(i.id)"
-                    class="btn btn-warning btn-sm"
                   >
                     <i class="typcn typcn-edit" style="color: white"></i>
                   </button>
@@ -146,11 +138,18 @@
                 <i class="fa fa-download"></i>
               </button> -->
                 </td>
-                <td>{{ i.nombre_tema }}</td>
+                <td>asd5</td>
+                <td>868</td>
+                <td>645</td>
+                <td>654654</td>
+                <td>6546546</td>
+                <td>6546546</td>
+                <td>6546546</td>
+                <!-- <td>{{ i.nombre_tema }}</td>
                 <td>{{ i.description }}</td>
                 <td>{{ i.nombre_dep }}</td>
                 <td>{{ i.nombre_ciu }}</td>
-                <td>{{ i.fecha_realizacion }}</td>
+                <td>{{ i.fecha_realizacion }}</td> -->
               </tr>
             </tbody>
           </table>
@@ -382,11 +381,18 @@
         <tribunales-magistrados-nuevo></tribunales-magistrados-nuevo>
       </div>
     </template>
+
+
+    
+
+
+
+
   </div>
 </template>
 
 <script>
-import tribunalesMagistradosNuevo from './tribunales-magistrados-nuevo.vue';
+import tribunalesMagistradosNuevo from "./tribunales-magistrados-nuevo.vue";
 export default {
   components: { tribunalesMagistradosNuevo },
   data() {
@@ -400,7 +406,7 @@ export default {
       action: 0,
       idEditar: 0,
       datos_edit: {},
-      pantalla: 'lista',
+      pantalla: "lista",
     };
   },
   created() {
@@ -413,87 +419,89 @@ export default {
     });
   },
   methods: {
-      pantallaNuevo(){
-          this.pantalla = 'nuevo'
-      },
-    modal_export(id) {
-      $("#cabildos_id").val(id);
-      this.dataPdf.cabildo_id = id;
-      this.dataPdf.radicado = "";
-      this.dataPdf.ciudadano = "";
-      $("#modal_export").modal("show");
-    },
-    exportPdf() {
-      window.open(
-        "/download?id=" +
-          this.dataPdf.cabildo_id +
-          "&radicado=" +
-          this.dataPdf.radicado +
-          "&ciudadano=" +
-          this.dataPdf.ciudadano
-      );
-      $("#modal_export").modal("hide");
-    },
-    export_exel() {
-      let url = "/excel-cabildos";
-      let filtros = this.dataFilter;
-      axios.post(url, filtros).then((res) => {
-        let blob = new Blob([res.data]);
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = "ReporteCabildos.xls";
-        link.click();
-      });
-    },
-    changeCity() {
-      var id = $("#departamento_id").val();
-      axios.post("/changeCity", { id: id }).then((r) => {
-        this.ciudades = r.data;
-      });
-    },
-    filter() {
-      let filtros = this.dataFilter;
-      axios.post("/filter-list-cabildos", filtros).then((r) => {
-        console.log(r.data.cabildos);
-        this.cabildos = r.data.cabildos;
-      });
-    },
+    // pantallaNuevo() {
+    //   this.pantalla = "nuevo";
+    // },
+    // modal_export(id) {
+    //   $("#cabildos_id").val(id);
+    //   this.dataPdf.cabildo_id = id;
+    //   this.dataPdf.radicado = "";
+    //   this.dataPdf.ciudadano = "";
+    //   $("#modal_export").modal("show");
+    // },
+    // exportPdf() {
+    //   window.open(
+    //     "/download?id=" +
+    //       this.dataPdf.cabildo_id +
+    //       "&radicado=" +
+    //       this.dataPdf.radicado +
+    //       "&ciudadano=" +
+    //       this.dataPdf.ciudadano
+    //   );
+    //   $("#modal_export").modal("hide");
+    // },
+    // export_exel() {
+    //   let url = "/excel-cabildos";
+    //   let filtros = this.dataFilter;
+    //   axios.post(url, filtros).then((res) => {
+    //     let blob = new Blob([res.data]);
+    //     let link = document.createElement("a");
+    //     link.href = window.URL.createObjectURL(blob);
+    //     link.download = "ReporteCabildos.xls";
+    //     link.click();
+    //   });
+    // },
+    // changeCity() {
+    //   var id = $("#departamento_id").val();
+    //   axios.post("/changeCity", { id: id }).then((r) => {
+    //     this.ciudades = r.data;
+    //   });
+    // },
+    // filter() {
+    //   let filtros = this.dataFilter;
+    //   axios.post("/filter-list-cabildos", filtros).then((r) => {
+    //     console.log(r.data.cabildos);
+    //     this.cabildos = r.data.cabildos;
+    //   });
+    // },
 
-    report() {
-      var form = new FormData();
-      form.append("nombre_tema", $("#nombre_tema").val());
-      form.append("dep_id", $("#dep_id").val());
-      form.append("fecha_realizacion", $("#fecha_realizacion").val());
-      form.append("fecha_final", $("#fecha_final").val());
-      axios.post("/excel-cabildos", form).then((r) => {});
-    },
+    // report() {
+    //   var form = new FormData();
+    //   form.append("nombre_tema", $("#nombre_tema").val());
+    //   form.append("dep_id", $("#dep_id").val());
+    //   form.append("fecha_realizacion", $("#fecha_realizacion").val());
+    //   form.append("fecha_final", $("#fecha_final").val());
+    //   axios.post("/excel-cabildos", form).then((r) => {});
+    // },
 
-    deleteSesion(id) {
-      Swal.fire({
-        title: "¿Eliminar registro?",
-        text: "Esta acción no se puede revertir",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#757575",
-        confirmButtonText: "Aceptar",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        console.log(result);
-        if (result.value) {
-          const url = "/delete-session/" + id;
-          axios.get(url).then((r) => {
-            this.cabildos = r.data.cabildos;
-            Swal.fire(
-              "¡Perfecto!",
-              "Datos eliminados correctamente",
-              "success"
-            );
-          });
-        }
-      });
-    },
-    editSession(id) {
+    // deleteSesion(id) {
+    //   Swal.fire({
+    //     title: "¿Eliminar registro?",
+    //     text: "Esta acción no se puede revertir",
+    //     icon: "question",
+    //     showCancelButton: true,
+    //     confirmButtonColor: "#3085d6",
+    //     cancelButtonColor: "#757575",
+    //     confirmButtonText: "Aceptar",
+    //     cancelButtonText: "Cancelar",
+    //   }).then((result) => {
+    //     console.log(result);
+    //     if (result.value) {
+    //       const url = "/delete-session/" + id;
+    //       axios.get(url).then((r) => {
+    //         this.cabildos = r.data.cabildos;
+    //         Swal.fire(
+    //           "¡Perfecto!",
+    //           "Datos eliminados correctamente",
+    //           "success"
+    //         );
+    //       });
+    //     }
+    //   });
+    // },
+
+
+    data_edit(id) {
       this.action = 1;
       this.idEditar = id;
       axios

@@ -104,7 +104,8 @@
               <th>Estado</th>
             </thead>
             <tbody>
-              <tr v-for="(i, index) in cabildos" :key="index">
+              <!-- v-for="(i, index) in cabildos" :key="index" -->
+              <tr >
                 <td class="aling_btn_options">
                   <button
                     type="button"
@@ -140,11 +141,17 @@
                 <i class="fa fa-download"></i>
               </button> -->
                 </td>
+                <td>asd</td>
+                <td>dd</td>
+                <td>d</td>
+                <td>d</td>
+                <td>ddd </td>
+<!--                 
                 <td>{{ i.nombre_tema }}</td>
                 <td>{{ i.description }}</td>
                 <td>{{ i.nombre_dep }}</td>
                 <td>{{ i.nombre_ciu }}</td>
-                <td>{{ i.fecha_realizacion }}</td>
+                <td>{{ i.fecha_realizacion }}</td> -->
               </tr>
             </tbody>
           </table>

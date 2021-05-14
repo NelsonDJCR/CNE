@@ -18,10 +18,11 @@
                 </div>
                 <div class="col-12 col-md-12 col-lg-2 col-xl-2 p-2">
                   <button
-                  @click="pantallaNuevo"
+                    @click="pantallaNuevo"
                     class="btn btn-warning text-white w-100 mt-2"
-                    >Nuevo tribunal</button
                   >
+                    Nuevo tribunal
+                  </button>
                 </div>
               </div>
             </div>
@@ -110,30 +111,20 @@
               <th>Estado</th>
             </thead>
             <tbody>
-              <tr v-for="(i, index) in cabildos" :key="index">
+              <!-- v-for="(i, index) in cabildos" :key="index" -->
+              <tr>
                 <td class="aling_btn_options">
                   <button
                     type="button"
-                    @click="modal_export(i.id)"
+                    @click="editar()"
                     class="btn btn-info btn-sm"
-                  >
-                    <i
-                      class="typcn typcn-document-text"
-                      style="color: white"
-                    ></i>
-                  </button>
-                  <button
-                    type="button"
-                    @click="editSession(i.id)"
-                    class="btn btn-warning btn-sm"
                   >
                     <i class="typcn typcn-edit" style="color: white"></i>
                   </button>
-
                   <button
                     type="button"
                     class="btn btn-danger btn-sm"
-                    @click="deleteSesion(i.id)"
+                    @click="deleteSesion()"
                   >
                     <i class="typcn typcn-trash"></i>
                   </button>
@@ -146,166 +137,21 @@
                 <i class="fa fa-download"></i>
               </button> -->
                 </td>
-                <td>{{ i.nombre_tema }}</td>
+                <td>j</td>
+                <td>hjkhhjk</td>
+                <td>h</td>
+                <td>jkhjkh</td>
+                <td>jkhjkh</td>
+                <td>jkhjkh</td>
+                <td>kjh kl</td>
+                <!-- <td>{{ i.nombre_tema }}</td>
                 <td>{{ i.description }}</td>
                 <td>{{ i.nombre_dep }}</td>
                 <td>{{ i.nombre_ciu }}</td>
-                <td>{{ i.fecha_realizacion }}</td>
+                <td>{{ i.fecha_realizacion }}</td> -->
               </tr>
             </tbody>
           </table>
-        </template>
-
-        <template v-if="action == 1">
-          <div>
-            <div class="container mt-5">
-              <label for="" class="p-2"
-                >Cabildos/Listado de cabildos/Editar sesión</label
-              >
-              <div class="row p-2 text-center border shadow">
-                <h1 class="text-blue"><b>EDITAR SESIÓN</b></h1>
-              </div>
-              <form @submit.prevent="saveEdit">
-                <!-- @include('modals.edit-file') -->
-                <input type="hidden" name="id_record" />
-                <div class="row">
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-5">
-                    <div class="row">
-                      <div class="mb-3">
-                        <label for="" class="form-label"><b>Tema *</b></label>
-                        <input
-                          v-model="datos_edit.nombre_tema"
-                          type="text"
-                          class="form-control"
-                          maxlength="250"
-                        />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="mb-3">
-                        <label for="" class="form-label"
-                          ><b>Descripción *</b></label
-                        >
-                        <textarea
-                          class="form-control"
-                          style="height: 150px"
-                          maxlength="1000"
-                          v-text="datos_edit.description"
-                          v-model="datos_edit.description"
-                        >
-                        </textarea>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="mb-3">
-                        <label for="" class="form-label"
-                          ><b>Departamento *</b></label
-                        >
-                        <select
-                          class="form-select"
-                          aria-label="Default select example"
-                          v-model="datos_edit.dep_id"
-                          v-on:change="changeCity()"
-                          id="departamento_id"
-                        >
-                          <option
-                            v-for="(i, index) in departament"
-                            :key="index"
-                            v-text="i.nombre"
-                            :value="i.id"
-                          ></option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="mb-3">
-                        <label for="" class="form-label"><b>Ciudad *</b></label>
-                        <select
-                          class="form-select"
-                          name="municipality"
-                          id="municipio"
-                          v-model="datos_edit.ciu_id"
-                        >
-                          <option>Seleccione ...</option>
-                          <option
-                            v-for="(i, index) in ciudades"
-                            :key="index"
-                            :value="i.id"
-                          >
-                            {{ i.nombre }}
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="mb-3">
-                        <label for="" class="form-label"
-                          ><b>Fecha de agendamiento *</b>
-                        </label>
-                        <div class="input-group">
-                          <input
-                            type="date"
-                            class="form-control"
-                            v-model="datos_edit.fecha_realizacion"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 mt-5">
-                    <div class="row">
-                      <label for="" class="form-label"
-                        ><b>Tipo de documento *</b>
-                      </label>
-                      <select class="form-select">
-                        <option
-                          v-for="(i, index) in type_file"
-                          :key="index"
-                          :value="i.id"
-                          v-text="i.nombre"
-                        ></option>
-                      </select>
-                    </div>
-                    <div class="row mt-3">
-                      <label for="" class="form-label"
-                        ><b>Radicado CNE *</b></label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        maxlength="30"
-                        v-model="datos_edit.radicado_CNE"
-                      />
-                    </div>
-                    <div class="row mt-5">
-                      <div
-                        class="form-group files border"
-                        role="button"
-                        id="box_file"
-                      >
-                        <div class="row mt-5">
-                          <img class="img_file mx-auto d-block" src="" alt="" />
-                        </div>
-                        <div class="row mt-1 mb-5">
-                          <p class="text_file text-center">
-                            Edita tus documentos aquí
-                          </p>
-                        </div>
-                      </div>
-                      <input
-                        id="file"
-                        type="file"
-                        class="form-control d-none"
-                      />
-                    </div>
-                    <div class="row mt-5">
-                      <button class="btn-primary btn">Editar sesión</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
         </template>
 
         <div
@@ -376,10 +222,19 @@
         </div>
       </div>
     </template>
-
     <template v-if="pantalla == 'nuevo'">
       <div>
         <tribunales-nuevo></tribunales-nuevo>
+      </div>
+    </template>
+    <template v-if="pantalla == 'editar'">
+      <div>
+        <tribunales-editar></tribunales-editar>
+      </div>
+    </template>
+    <template v-if="pantalla == 'ver'">
+      <div>
+        <tribunales-ver></tribunales-ver>
       </div>
     </template>
   </div>
@@ -398,7 +253,7 @@ export default {
       action: 0,
       idEditar: 0,
       datos_edit: {},
-      pantalla: 'lista',
+      pantalla: "lista",
     };
   },
   created() {
@@ -411,124 +266,125 @@ export default {
     });
   },
   methods: {
-      pantallaNuevo(){
-          this.pantalla = 'nuevo'
-      },
-    modal_export(id) {
-      $("#cabildos_id").val(id);
-      this.dataPdf.cabildo_id = id;
-      this.dataPdf.radicado = "";
-      this.dataPdf.ciudadano = "";
-      $("#modal_export").modal("show");
+    editar() {
+      this.pantalla = "editar";
     },
-    exportPdf() {
-      window.open(
-        "/download?id=" +
-          this.dataPdf.cabildo_id +
-          "&radicado=" +
-          this.dataPdf.radicado +
-          "&ciudadano=" +
-          this.dataPdf.ciudadano
-      );
-      $("#modal_export").modal("hide");
-    },
-    export_exel() {
-      let url = "/excel-cabildos";
-      let filtros = this.dataFilter;
-      axios.post(url, filtros).then((res) => {
-        let blob = new Blob([res.data]);
-        let link = document.createElement("a");
-        link.href = window.URL.createObjectURL(blob);
-        link.download = "ReporteCabildos.xls";
-        link.click();
-      });
-    },
-    changeCity() {
-      var id = $("#departamento_id").val();
-      axios.post("/changeCity", { id: id }).then((r) => {
-        this.ciudades = r.data;
-      });
-    },
-    filter() {
-      let filtros = this.dataFilter;
-      axios.post("/filter-list-cabildos", filtros).then((r) => {
-        console.log(r.data.cabildos);
-        this.cabildos = r.data.cabildos;
-      });
-    },
-
-    report() {
-      var form = new FormData();
-      form.append("nombre_tema", $("#nombre_tema").val());
-      form.append("dep_id", $("#dep_id").val());
-      form.append("fecha_realizacion", $("#fecha_realizacion").val());
-      form.append("fecha_final", $("#fecha_final").val());
-      axios.post("/excel-cabildos", form).then((r) => {});
-    },
-
-    deleteSesion(id) {
-      Swal.fire({
-        title: "¿Eliminar registro?",
-        text: "Esta acción no se puede revertir",
-        icon: "question",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#757575",
-        confirmButtonText: "Aceptar",
-        cancelButtonText: "Cancelar",
-      }).then((result) => {
-        console.log(result);
-        if (result.value) {
-          const url = "/delete-session/" + id;
-          axios.get(url).then((r) => {
-            this.cabildos = r.data.cabildos;
-            Swal.fire(
-              "¡Perfecto!",
-              "Datos eliminados correctamente",
-              "success"
-            );
-          });
-        }
-      });
-    },
-    editSession(id) {
-      this.action = 1;
-      this.idEditar = id;
-      axios
-        .get("/edit-sesion/" + id)
-        .then((r) => {
-          this.datos_edit = r.data.datos;
-          this.departament = r.data.departament;
-          this.ciudades = r.data.ciudades;
-          this.type_file = r.data.type_file;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
-    saveEdit() {
-      let datos = this.datos_edit;
-      let url = "/editSesion";
-      axios.post(url, datos).then((res) => {
-        if (res.data.status == 406) {
-          Swal.fire({
-            icon: "error",
-            title: "¡Error!",
-            text: res.data.msg,
-          });
-        } else {
-          this.action = 0;
-          this.cabildos = res.data.table;
-          // console.log(r.data);
-          // return false;
-          Swal.fire({
-            icon: "success",
-            title: "¡Perfercto!",
-            text: "Datos guardados exitosamente",
-          });
-        }
-      });
-    },
+    // pantallaNuevo(){
+    //     this.pantalla = 'nuevo'
+    // },
+    // modal_export(id) {
+    //   $("#cabildos_id").val(id);
+    //   this.dataPdf.cabildo_id = id;
+    //   this.dataPdf.radicado = "";
+    //   this.dataPdf.ciudadano = "";
+    //   $("#modal_export").modal("show");
+    // },
+    // exportPdf() {
+    //   window.open(
+    //     "/download?id=" +
+    //       this.dataPdf.cabildo_id +
+    //       "&radicado=" +
+    //       this.dataPdf.radicado +
+    //       "&ciudadano=" +
+    //       this.dataPdf.ciudadano
+    //   );
+    //   $("#modal_export").modal("hide");
+    // },
+    // export_exel() {
+    //   let url = "/excel-cabildos";
+    //   let filtros = this.dataFilter;
+    //   axios.post(url, filtros).then((res) => {
+    //     let blob = new Blob([res.data]);
+    //     let link = document.createElement("a");
+    //     link.href = window.URL.createObjectURL(blob);
+    //     link.download = "ReporteCabildos.xls";
+    //     link.click();
+    //   });
+    // },
+    // changeCity() {
+    //   var id = $("#departamento_id").val();
+    //   axios.post("/changeCity", { id: id }).then((r) => {
+    //     this.ciudades = r.data;
+    //   });
+    // },
+    // filter() {
+    //   let filtros = this.dataFilter;
+    //   axios.post("/filter-list-cabildos", filtros).then((r) => {
+    //     console.log(r.data.cabildos);
+    //     this.cabildos = r.data.cabildos;
+    //   });
+    // },
+    // report() {
+    //   var form = new FormData();
+    //   form.append("nombre_tema", $("#nombre_tema").val());
+    //   form.append("dep_id", $("#dep_id").val());
+    //   form.append("fecha_realizacion", $("#fecha_realizacion").val());
+    //   form.append("fecha_final", $("#fecha_final").val());
+    //   axios.post("/excel-cabildos", form).then((r) => {});
+    // },
+    // deleteSesion(id) {
+    //   Swal.fire({
+    //     title: "¿Eliminar registro?",
+    //     text: "Esta acción no se puede revertir",
+    //     icon: "question",
+    //     showCancelButton: true,
+    //     confirmButtonColor: "#3085d6",
+    //     cancelButtonColor: "#757575",
+    //     confirmButtonText: "Aceptar",
+    //     cancelButtonText: "Cancelar",
+    //   }).then((result) => {
+    //     console.log(result);
+    //     if (result.value) {
+    //       const url = "/delete-session/" + id;
+    //       axios.get(url).then((r) => {
+    //         this.cabildos = r.data.cabildos;
+    //         Swal.fire(
+    //           "¡Perfecto!",
+    //           "Datos eliminados correctamente",
+    //           "success"
+    //         );
+    //       });
+    //     }
+    //   });
+    // },
+    // editSession(id) {
+    //   this.action = 1;
+    //   this.idEditar = id;
+    //   axios
+    //     .get("/edit-sesion/" + id)
+    //     .then((r) => {
+    //       this.datos_edit = r.data.datos;
+    //       this.departament = r.data.departament;
+    //       this.ciudades = r.data.ciudades;
+    //       this.type_file = r.data.type_file;
+    //     })
+    //     .catch(function (error) {
+    //       console.log(error);
+    //     });
+    // },
+    // saveEdit() {
+    //   let datos = this.datos_edit;
+    //   let url = "/editSesion";
+    //   axios.post(url, datos).then((res) => {
+    //     if (res.data.status == 406) {
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "¡Error!",
+    //         text: res.data.msg,
+    //       });
+    //     } else {
+    //       this.action = 0;
+    //       this.cabildos = res.data.table;
+    //       // console.log(r.data);
+    //       // return false;
+    //       Swal.fire({
+    //         icon: "success",
+    //         title: "¡Perfercto!",
+    //         text: "Datos guardados exitosamente",
+    //       });
+    //     }
+    //   });
+    // },
   },
 };
 </script>

@@ -9,11 +9,11 @@
 
     <div class="container mt-5">
       <label for="" class="p-2"
-        >Cabildos/Listado de cabildos/Nuevo tribunal
+        >Cabildos/Listado de cabildos/Editar tribunal
       </label>
       <div class="row p-2 text-center border shadow">
         <div class="row">
-          <h1 class="text-blue"><b>NUEVO TRIBUNAL</b></h1>
+          <h1 class="text-blue"><b>EDITAR TRIBUNAL</b></h1>
         </div>
       </div>
 
