@@ -16,16 +16,10 @@
             <label for="" class="p-2">Cabildos/Listado de cabildos </label>
             <div class="row p-2 text-center border shadow">
               <div class="row">
-                <div class="col-12 col-md-12 col-lg-10 col-xl-10 p-2">
-                  <h1 class="text-blue"><b>LISTADO DE CABILDOS</b></h1>
+                <div class="col-12 col-md-12 col-lg-12 col-xl-12 p-2">
+                  <h1 class="text-blue"><b>INFORME DE CABILDOS</b></h1>
                 </div>
-                <div class="col-12 col-md-12 col-lg-2 col-xl-2 p-2">
-                  <a
-                    @click="nuevoCabildo"
-                    class="btn btn-warning text-white w-100 mt-2"
-                    >Nueva sesión</a
-                  >
-                </div>
+                
               </div>
             </div>
             <form @submit.prevent="filter">
@@ -85,14 +79,24 @@
                       Buscar
                     </button>
                   </div>
-             
+                  <div class="mb-3 col-8"></div>
+                  <div class="mb-3 col-1">
+                    <button
+                      style="backgroud: white;width:60px;"
+                      class="btn "
+                      id="btn_exece"
+                      type="button"
+                      @click="export_exel()"
+                    >
+                      <img style="width:30px;" src="https://img.icons8.com/color/452/microsoft-excel-2019--v1.png">
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
           <table class="table table-bordered table-striped table-sm" id="datos">
             <thead>
-              <th style="width: 195px">Opciones</th>
               <th>Tema</th>
               <th>Descripción</th>
               <th>Departamento</th>
@@ -100,39 +104,8 @@
               <th>Fecha</th>
             </thead>
             <tbody>
-              <tr v-for="(i, index) in cabildos" :key="index">
-                <td class="aling_btn_options">
-                  <button
-                    type="button"
-                    @click="modal_export(i.id)"
-                    class="btn btn-info btn-sm"
-                  >
-                    <i class="typcn typcn-document-text" style="color: white"></i>
-                  </button>
-                  <button
-                    type="button"
-                    @click="editSession(i.id)"
-                    class="btn btn-warning btn-sm"
-                  >
-                    <i class="typcn typcn-edit" style="color: white"></i>
-                  </button>
-
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm"
-                    @click="deleteSesion(i.id)"
-                  >
-                    <i class="typcn typcn-trash"></i>
-                  </button>
-
-                  <!-- <button
-                    data-id=""
-                    type="button"
-                    class="btn download_parameterization download_btn"
-                  >
-                    <i class="fa fa-download"></i>
-                  </button> -->
-                </td>
+              <tr v-for="(i, index) in cabildos" :key="index" style="height:50px;">
+           
                 <td>{{ i.nombre_tema }}</td>
                 <td>{{ i.description }}</td>
                 <td>{{ i.nombre_dep }}</td>
@@ -700,6 +673,7 @@ export default {
     },
     saveEdit() {
       let datos = this.datos_edit;
+
       let url = "/editSesion";
       axios.post(url, datos).then((res) => {
         if (res.data.status == 406) {

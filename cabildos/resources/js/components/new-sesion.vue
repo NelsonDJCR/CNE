@@ -1,5 +1,5 @@
 <template>
-  <div id="sesion">
+ <div id="sesion">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -214,12 +214,17 @@
         </div>
       </div>
     </div>
+
+
+    
   </div>
 </template>
+
+
+
+
 <script>
-// $('body').on('click', '.delete_file', function() {
-//   $(this).parent().parent().remove();
-// });
+
 export default {
   data() {
     return {
@@ -229,12 +234,6 @@ export default {
       sesion: {},
       documentos: [],
       index: 0,
-      // department = 0,
-      //   municipality =0,
-      //   radicado_CNE = '',
-      //   theme = '',
-      //   description = '',
-      //   date = '',
     };
   },
   created() {
@@ -295,7 +294,6 @@ export default {
             window.location = "/main#/listarSesiones";
           });
         }
-
       });
     },
   },

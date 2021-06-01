@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TipoDocumento;
 use App\Models\Departamento;
-use App\Models\Municipio;
 use App\Models\Documento;
 use App\Models\CabildoAbierto;
 use App\Models\CabildoSoporte;
@@ -30,7 +29,6 @@ class CabildosController extends Controller
 
     public function save(Request $r)
     {
-        
         $rules = [
             'theme' => 'required',
             'description' => 'required',
@@ -65,42 +63,18 @@ class CabildosController extends Controller
                 return response()->json([
                     'msg' => 'Datos guardados correctamente',
                     'code' => 200,
+                    'table' =>CabildoAbierto::select('cabildo_abierto.*', 'departamentos.nombre AS nombre_dep', 'ciudades.nombre AS nombre_ciu')
+                    ->leftjoin("departamentos", "departamentos.id", "cabildo_abierto.dep_id")
+                    ->leftjoin("ciudades", "ciudades.id", "cabildo_abierto.ciu_id")
+                    ->where('cabildo_abierto.estado', 1)
+                    ->get()
+
                 ]);
             }
             
         }
         
 
-
-
-
-        // if (!isset($r->file)) {
-        //     return response()->json([
-        //         'msg' => 'Debe ingresar al menos un documento'
-        //     ]);
-        // }
-        
-        
-        // $type =  $r->type_file;
-        // foreach ($r->file as $i) {
-        // $path =  $r->file('file')->store('uploads', 'public');
-        // $doc = new Documento();
-        // $doc->nombre = "x";
-        // $doc->ruta = $path;
-        // $doc->id_tipo_documento = $type;
-        // $doc->save();
-
-        // $x = new CabildoSoporte();
-        // $x->id_cabildo = $e->id;
-        // $x->id_documento = $doc->id;
-
-        // }
-        // if ($x->save()) {
-        // return response()->json([
-        //     'msg' => 'Datos guardados correctamente',
-        //     'code' => 200,
-        // ]);
-        // }
 
         
     }
@@ -203,15 +177,13 @@ class CabildosController extends Controller
         // ->with('departament', Departamento::all())
         // ->with('data', CabildoAbierto::find($id));
 
-        // $datos = CabildoAbierto::where('id',$id)
-        // ->leftjoin("tipo_documento", "tipo_documento.id", "cabildo_abierto.")
-        // ;
+        $datos = CabildoAbierto::find($id);
 
         return response()->json([
             'type_file' => TipoDocumento::all(),
             'ciudades' => Ciudad::all(),
             'departament' => Departamento::all(),
-            // 'datos' => $datos
+            'datos' => $datos
         ]);
     }
 
@@ -224,9 +196,10 @@ class CabildosController extends Controller
 
     public function editSesion(Request $r)
     {
+        
         $rules = [
-            'nombre_tema' => 'required',
             'description' => 'required',
+            'nombre_tema' => 'required',
             'dep_id' => 'required|numeric',
             'ciu_id' => 'required|numeric',
             'fecha_realizacion' => 'required|after:today',
@@ -338,8 +311,16 @@ class CabildosController extends Controller
     public function reportSessions(Request $r)
     {
 
+
+    
+     
+
         $post = $r;
-        $cabildo = CabildoAbierto::where('estado', 1)
+        $cabildo = CabildoAbierto::select('cabildo_abierto.*', 'departamentos.nombre AS nombre_dep', 'ciudades.nombre AS nombre_ciu')
+            ->leftjoin("departamentos", "departamentos.id", "cabildo_abierto.dep_id")
+            ->leftjoin("ciudades", "ciudades.id", "cabildo_abierto.ciu_id")
+            ->where('cabildo_abierto.estado', 1)
+
             ->where(function ($query) use ($post) {
                 if (isset($post['nombre_tema'])) {
                     if (!empty($post['nombre_tema']))
@@ -353,23 +334,22 @@ class CabildosController extends Controller
                 }
             })
             ->where(function ($query) use ($post) {
-                if (isset($post['mun_id'])) {
-                    if (!empty($post['mun_id']))
-                        $query->orwhere('cabildo_abierto.mun_id', 'like', "%" . $post['mun_id'] . "%");
+                if (isset($post['fecha_realizacion'])) {
+                    if (!empty($post['fecha_realizacion']))
+                    $query->where('cabildo_abierto.fecha_realizacion', '>=', $post['fecha_realizacion']);
                 }
             })
             ->where(function ($query) use ($post) {
-                if (isset($post['fecha_realizacion'])) {
-                    if (!empty($post['fecha_realizacion']))
-                        $query->orwhere('cabildo_abierto.fecha_realizacion', 'like', "%" . $post['fecha_realizacion'] . "%");
+                if (isset($post['fecha_end'])) {
+                    if (!empty($post['fecha_end']))
+                    $query->where('cabildo_abierto.fecha_realizacion', '<=', $post['fecha_end']);
                 }
             })
             ->get();
         return view('sessions.report')
-            ->with('departments', Departamento::all())
-            ->with('municipios', Ciudad::all())
-            ->with('cabildos', $cabildo)
-            ->with('post', $r);
+            // ->with('departments', Departamento::all())
+            // ->with('municipios', Ciudad::all())
+            ->with('cabildos', $cabildo);
     }
 
 	public function changeCity(Request $r)

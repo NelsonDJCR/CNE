@@ -144,6 +144,7 @@ Route::middleware('auth')->group(function () {
         // Rutas para tipos de documento
         //--------------------------------------------------------------------------------------
 
+        Route::post('/excel-cabildos', [CabildosController::class, 'reportSessions']);
         Route::get('/new-sesion', [CabildosController::class, 'getIndex']);
         Route::get('/data-new-sesion', [CabildosController::class, 'dataGetIndex']);
         Route::post('/saveSesion', [CabildosController::class, 'save']);
